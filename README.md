@@ -10,6 +10,25 @@ An accepted NVAPI write reports `sent`, never `switched`. Verify picture and USB
 peripheral migration yourself. No display mode, resolution, refresh rate, HDR,
 sleep or USB hub configuration is changed by this program.
 
+## Download and run on your PC
+
+Download the `kvmswitch-windows-x64` artifact from a successful **push** build of
+the implementation branch in [GitHub Actions](https://github.com/solomonglazer/kvmswitch/actions).
+Extract the complete ZIP into a writable folder and double-click `START-HERE.cmd`.
+Choose **1** for read-only readiness checks. Choose **2** when ready for the first
+switch; it repeats readiness checks and asks Y/N before sending one command.
+
+No installer or administrator access is required. The Microsoft C++ runtime is
+linked into the executable; the installed NVIDIA graphics driver is still required.
+Delete the extracted folder to remove the utility. This is an unsigned experimental
+test package; if Windows blocks it, report the exact message instead of disabling protection.
+
+`test-results.txt` saves readiness and command output beside the launcher. Copy it
+before the next run, which replaces it. It is never sent automatically. Add your
+observations about the Mac picture, keyboard/mouse transfer and recovery when
+sharing it. `BUILD-INFO.txt` identifies the source commit and build run;
+`SHA256SUMS.txt` records package file hashes. See `FIRST-TEST.txt` inside the ZIP.
+
 ## Build on Windows
 
 Install Visual Studio 2022 Build Tools with Desktop development with C++ and CMake,
@@ -27,7 +46,9 @@ CMake fetches NVIDIA's NVAPI SDK at the pinned revision recorded in
 [protocol-evidence](docs/protocol-evidence.md). It links the SDK's x64 import
 library; NVAPI runs through the installed NVIDIA driver. No driver or service is
 installed by the utility. Review NVIDIA's SDK license before redistributing its
-files. The Windows CI workflow compiles and runs mocked tests; it cannot test hardware.
+files. The Windows CI workflow compiles and runs mocked tests, verifies package
+hashes and smoke-tests the shipped launcher from a folder with spaces. Its smoke
+test runs help only and cannot switch a monitor. CI cannot test hardware.
 
 ## Run the PC to Mac test
 
