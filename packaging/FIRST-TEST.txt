@@ -1,0 +1,48 @@
+kvmswitch - first Windows PC-to-Mac test
+
+Requirements
+  Windows 11 x64, installed NVIDIA driver, LG 38WR85QC-W directly on DP.
+  Mac awake and connected to the monitor's USB-C video port.
+  Monitor joystick accessible for restoring DisplayPort.
+
+Setup
+  Extract ALL files to a writable folder, such as Desktop\kvmswitch-test.
+  No installer, administrator access, service, or startup registration is needed.
+  The Microsoft C++ runtime is linked into the executable.
+  The NVIDIA driver remains required. Nothing is installed by the launcher.
+  Delete this folder to remove the program. No settings are stored elsewhere.
+
+First check
+  Double-click START-HERE.cmd and choose 1.
+  This lists active monitors, checks the NVIDIA route and shows a dry run.
+  It does not send an input-switch command.
+  If it fails, send test-results.txt back to the developer; do not try raw values.
+
+First switch
+  Save open work and make sure the Mac is ready to display.
+  Double-click START-HERE.cmd and choose 2.
+  It runs fresh readiness checks, then asks Y/N before sending one command.
+  Check that the displayed LG identity is your intended monitor before choosing Y.
+  Check whether the Mac picture appeared and keyboard/mouse moved to the Mac.
+  Use your known working Mac command or the joystick to return to Windows DP.
+  A sent status means driver acceptance only. Even a write error can accompany
+  a picture change; inspect the screen before retrying.
+
+Results to send back
+  Copy test-results.txt before another run: the next readiness check replaces it.
+  Add: Did the Mac picture appear? Did keyboard and mouse transfer?
+  Did other USB devices transfer? How did you restore DP? Any display changes?
+  The log contains display identifiers and command output, not raw EDID/serials.
+  No log is sent automatically; review it before sharing.
+
+Download identity
+  BUILD-INFO.txt identifies the exact source commit and workflow run.
+  SHA256SUMS.txt records hashes for the packaged files.
+  This is an unsigned experimental test build, not a validated consumer release.
+  If Windows blocks execution, report the exact message; do not disable protection.
+
+Optional command-line use from this folder
+  .\kvmswitch.exe list
+  .\kvmswitch.exe doctor
+  .\kvmswitch.exe switch usb-c --dry-run
+  .\kvmswitch.exe switch usb-c --confirm-experimental

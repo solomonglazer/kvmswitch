@@ -7,7 +7,8 @@ int main(int argc, char** argv) {
         std::cout<<kvm::execute(options,*backend);
         return 0;
     } catch(const kvm::Error& e) {
-        std::cerr<<"status=refused error="<<e.what()<<'\n'; return static_cast<int>(e.code);
+        std::cerr<<(e.code==kvm::Code::write?"status=write-failed error=":"status=refused error=")
+            <<e.what()<<'\n'; return static_cast<int>(e.code);
     } catch(const std::exception& e) {
         std::cerr<<"status=error error="<<e.what()<<'\n'; return 8;
     }

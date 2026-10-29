@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 project(kvmswitch VERSION 0.1.0 LANGUAGES CXX)
+# Portable test builds do not require a separately installed VC++ runtime.
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)

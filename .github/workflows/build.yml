@@ -16,9 +16,18 @@ jobs:
         run: cmake --build build --config Release
       - name: Mocked tests (no hardware)
         run: ctest --test-dir build -C Release --output-on-failure
-      - name: Upload Windows test executable
+      - name: Prepare portable Windows package
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./packaging/package.ps1 -Executable build/Release/kvmswitch.exe -Commit '${{ github.sha }}' -RunUrl '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}' -OutputDirectory 'build/Windows test package'
+      - name: Verify portable package (no hardware)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./packaging/test-package.ps1 -Directory 'build/Windows test package'
+      - name: Upload Windows test package
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: kvmswitch-windows-x64
-          path: build/Release/kvmswitch.exe
+          path: build/Windows test package/*
+          if-no-files-found: error
